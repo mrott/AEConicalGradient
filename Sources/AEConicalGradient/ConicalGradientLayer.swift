@@ -109,7 +109,7 @@ open class ConicalGradientLayer: CALayer {
             line.addLine(to: center)
             
             var newAngle = angle + offsetAngle
-            if offsetAngle > Double.pi * 2 {
+            if newAngle > Double.pi * 2 {
                 newAngle = newAngle - (Double.pi * 2)
             }
             
