@@ -70,6 +70,13 @@ open class ConicalGradientLayer: CALayer {
         }
     }
 
+    /// End angle in radians. Defaults to 0.
+    open var offsetAngle: Double = 0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
     private var transitions = [Transition]()
     
     // MARK: Lifecycle
@@ -96,14 +103,22 @@ open class ConicalGradientLayer: CALayer {
             let pointX = radius * cos(angle) + Double(center.x)
             let pointY = radius * sin(angle) + Double(center.y)
             let startPoint = CGPoint(x: pointX, y: pointY)
-
+            
+            print("gradient")
+            print(startPoint)
+            
             let line = UIBezierPath()
             line.move(to: startPoint)
             line.addLine(to: center)
-
-            color(forAngle: angle).setStroke()
+            
+            var newAngle = angle + offsetAngle
+            if offsetAngle > Double.pi * 2 {
+                newAngle = newAngle - (Double.pi * 2)
+            }
+            
+            color(forAngle: newAngle).setStroke()
             line.stroke()
-
+            
             angle += step
         }
     }
