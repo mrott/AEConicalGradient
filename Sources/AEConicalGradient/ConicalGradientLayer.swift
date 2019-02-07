@@ -104,9 +104,6 @@ open class ConicalGradientLayer: CALayer {
             let pointY = radius * sin(angle) + Double(center.y)
             let startPoint = CGPoint(x: pointX, y: pointY)
             
-            print("gradient")
-            print(startPoint)
-            
             let line = UIBezierPath()
             line.move(to: startPoint)
             line.addLine(to: center)
