@@ -136,7 +136,7 @@ open class ConicalGradientLayer: CALayer {
         return transition.color(forPercent: percent)
     }
     
-    func offsetColor(forAngle angle: Double) -> UIColor {
+    open func offsetColor(forAngle angle: Double) -> UIColor {
         var newAngle = angle
         if newAngle > Double.pi * 2 {
             newAngle = newAngle - (Double.pi * 2)
