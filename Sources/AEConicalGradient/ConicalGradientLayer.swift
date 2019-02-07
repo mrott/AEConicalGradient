@@ -71,7 +71,13 @@ open class ConicalGradientLayer: CALayer {
     }
 
     /// End angle in radians. Defaults to 0.
-    open var offsetAngle: Double = 0 {
+    open var borderColorOffsetAngle: Double = 0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    open var colorOffsetAngle: Double = 0 {
         didSet {
             setNeedsDisplay()
         }
@@ -108,7 +114,7 @@ open class ConicalGradientLayer: CALayer {
             line.move(to: startPoint)
             line.addLine(to: center)
             
-            var newAngle = angle + offsetAngle
+            var newAngle = angle + borderColorOffsetAngle
             if newAngle > Double.pi * 2 {
                 newAngle = newAngle - (Double.pi * 2)
             }
@@ -127,6 +133,21 @@ open class ConicalGradientLayer: CALayer {
             return spectrumColor(forAngle: angle)
         }
 
+        return transition.color(forPercent: percent)
+    }
+    
+    func offsetColor(forAngle angle: Double) -> UIColor {
+        var newAngle = angle
+        if newAngle > Double.pi * 2 {
+            newAngle = newAngle - (Double.pi * 2)
+        }
+        
+        let percent = newAngle.convert(fromZeroToMax: Constants.MaxAngle, toZeroToMax: 1.0)
+        
+        guard let transition = transition(forPercent: percent) else {
+            return spectrumColor(forAngle: angle)
+        }
+        
         return transition.color(forPercent: percent)
     }
 
